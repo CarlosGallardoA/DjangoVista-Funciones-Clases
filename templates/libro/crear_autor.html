@@ -1,0 +1,13 @@
+{% extends "libro/home.html" %}
+{% block title %}Create{% endblock %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    {% if error %}
+    <h2>{{ error }}</h2>
+    {% else %}
+    {{ autor_form.as_p }}
+    <button type="submit">Crear</button>
+    {% endif %}
+</form>
+{% endblock %}

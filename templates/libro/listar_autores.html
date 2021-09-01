@@ -1,0 +1,37 @@
+{% extends "libro/home.html"%}
+{% block title %}Listardo de Autores{% endblock %}
+{% block content %}
+
+{% if autores %}
+<table border="1">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Nacionalidad</th>
+            <th>Descripcion</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for autor in autores %}
+            <tr>
+                <td>{{ autor.id }}</td>
+                <td>{{ autor.nombre }}</td>
+                <td>{{ autor.apellidos }}</td>
+                <td>{{ autor.nacionalidad }}</td>
+                <td>{{ autor.descripcion }}</td>
+                <td>
+                    <a href="{% url 'editar_autor' autor.id %}">Editar</a>
+                    <a href="{% url 'eliminar_autor' autor.id %}" onclick="return confirm('Eliminar ?')">Eliminar</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h1>No hay autores registrados</h1>
+{% endif %}
+
+{% endblock %}
