@@ -12,3 +12,5 @@ path('logout/',LogoutView.as_view(), name='logout')
 ```python
 path('listar_autor',login_required(views.ListarAutor.as_view()), name='listar_autor'),
 ```
+# Ahora hacer un login manual creado una app usuario
+
