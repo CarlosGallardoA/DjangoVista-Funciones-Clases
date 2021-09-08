@@ -78,3 +78,42 @@ class EliminarLibro(DeleteView):
     <button type="submit" class="btn btn-danger">Confirmar</button>
 </form>
 ```
+## Escalar codigo usando funciones dentro de las vistas basadas en clases
+```python
+class ListarLibros(View):
+    model = Libro
+    template_name = 'libro/libro/listar_libros.html'
+    #get_queryset es para la consulta
+    def get_queryset(self):
+        return self.model.objects.filter(estado = True)
+    #el get_context_data es para definir el contexto a pasar a la vista
+    def get_context_data(self, **kwargs):
+        context = {}
+        context['libros'] = self.get_queryset
+        return context
+    #Usamos el metodo get para recibir la info
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name, self.get_context_data())
+```
+### Recordar si solo pasamos:
+```python
+form = self.form_class(request.POST)
+```
+### es para agregar un nuevo registro pero si pasamos:
+```python
+form = self.form_class(request.POST, intance = consulta)
+```
+### es para editar
+## importante el object es un objecto que se crea automaticamente al momento de usar :
+```python
+context = super().get_context_data(**kwargs)
+```
+## Jquery usar modal:
+```js
+function abrir_modal_edicion(url){
+        $('#edicion').load(url, function(){
+            $(this).modal('show');
+        })
+    }
+
+```

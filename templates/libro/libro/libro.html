@@ -1,12 +1,12 @@
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 class="modal-title">Creación</h2>
+            <h2 class="modal-title">Edición de libro: {{ object }}</h2>
             <button class="close" type="button" aria-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form action="{% url 'crear_libro' %}" method="POST">
+        <form action="{% url 'editar_libro' object.id %}" method="POST">
             {% csrf_token %}
             <div class="modal-body">
                 {{ form.as_p }}

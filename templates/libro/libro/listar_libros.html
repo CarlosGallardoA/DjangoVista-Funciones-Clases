@@ -1,7 +1,8 @@
 {% extends "libro/home.html"%}
 {% block title %}Listardo de Libros{% endblock %}
 {% block content %}
-
+<button class="btn btn-primary" type="button" onclick="abrir_modal_creacion('{% url 'crear_libro' %}')">Crear libro</button>
+<br>
 {% if libros %}
 <br>
 <table class="table">
@@ -26,7 +27,7 @@
             </td>
             <td>{{ libro.fecha_publicacion }}</td>
             <td>
-                <a class="btn btn-info" href="{% url 'editar_libro' libro.id %}">Editar</a>
+                <button class="btn btn-info" onclick="abrir_modal_edicion('{% url 'editar_libro' libro.id %}')">Editar</button>
                 <a class="btn btn-danger" href="{% url 'eliminar_libro' libro.id %}">Eliminar</a>
             </td>
         </tr>
@@ -34,8 +35,28 @@
     </tbody>
 </table>
 {% else %}
-<h1>No hay autores registrados</h1>
+<h1>No hay libros registrados</h1>
 <br>
 {% endif %}
+<div class="modal fade" id="creacion" role="dialog">
+
+</div>
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+{% block stracjs %}
+<script type="text/javascript" src="">
+    function abrir_modal_edicion(url){
+        $('#edicion').load(url, function(){
+            $(this).modal('show');
+        })
+    }
+    function abrir_modal_creacion(url){
+        $('#creacion').load(url, function(){
+            $(this).modal('show');
+        })
+    }
+</script>
+{% endblock %}
 <a class="btn btn-warning" href="{% url 'home' %}">Regresar al inicio</a>
 {% endblock %}

@@ -4,7 +4,7 @@ from .forms import *
 from .models import *
 from django.urls import reverse_lazy
 ##CLases 
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, View
 # Create your views here.
 '''
 dispatch(): Valida la peticion y elige que metodo HTTP se utilizo para la solicitud
@@ -49,12 +49,24 @@ class EliminarAutor(DeleteView):
         object.save()
         return redirect('listar_autor')
 
-
-class ListarLibros(ListView):
+#Usando funciones en vistas basadas en clases
+class ListarLibros(View):
     model = Libro
+    form_class = LibroForm
     template_name = 'libro/libro/listar_libros.html' #queryset default is Lobro.objects.all()
-    queryset = Libro.objects.filter(estado = True)
-    context_object_name = 'libros'
+
+    def get_queryset(self):
+        return self.model.objects.filter(estado = True)
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        context['libros'] = self.get_queryset
+        context['form'] = self.form_class
+        return context
+
+    def get(self, request, *args, **kwargs):
+        return render(request,self.template_name, self.get_context_data())
+
     
 ## Ahora libros
 
@@ -67,8 +79,13 @@ class CrearLibro(CreateView):
 class ActualizarLibro(UpdateView):
     model = Libro
     form_class = LibroForm
-    template_name = 'libro/libro/crear_libro.html'
+    template_name = 'libro/libro/libro.html'
     success_url = reverse_lazy('listar_libros')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['libros'] = Libro.objects.filter(estado = True)
+        return context
 
 class EliminarLibro(DeleteView):
     model = Libro
