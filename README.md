@@ -52,3 +52,29 @@ def logoutUsuario(request):
 ```python
 path('logout/',login_required(logoutUsuario), name='logout'),
 ```
+## Si la relacion de modelos de ManyToMany para mostrar los datos en la vista tienes que usar la
+```html
+<td>
+    {% for autor in libro.autor_id.all %}
+        <li>{{ autor.nombre }}</li>
+    {% endfor %}
+</td>
+```
+## Para la eliminacion con clases se usa
+```python
+class EliminarLibro(DeleteView):
+    model = Libro
+    def post(self, request, pk, *args, **kwargs):
+        object = Libro.objects.get(id=pk)
+        object.estado = False
+        object.save()
+        return redirect('listar_libros')
+```
+## Esto necesita crear un modelo_confirm_delete.html 
+```html
+<form method="POST">
+    {% csrf_token %}
+    <p><strong>¿Desea eliminar el registro {{ object }} ?</strong></p>
+    <button type="submit" class="btn btn-danger">Confirmar</button>
+</form>
+```

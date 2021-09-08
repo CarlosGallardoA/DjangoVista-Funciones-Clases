@@ -1,0 +1,41 @@
+{% extends "libro/home.html"%}
+{% block title %}Listardo de Libros{% endblock %}
+{% block content %}
+
+{% if libros %}
+<br>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Titulo</th>
+            <th>Autor</th>
+            <th>Fecha de publicación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+        <tr>
+            <td>{{ libro.id }}</td>
+            <td>{{ libro.titulo }}</td>
+            <td>
+                {% for autor in libro.autor_id.all %}
+                <li>{{ autor.nombre }}</li>
+                {% endfor %}
+            </td>
+            <td>{{ libro.fecha_publicacion }}</td>
+            <td>
+                <a class="btn btn-info" href="{% url 'editar_libro' libro.id %}">Editar</a>
+                <a class="btn btn-danger" href="{% url 'eliminar_libro' libro.id %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h1>No hay autores registrados</h1>
+<br>
+{% endif %}
+<a class="btn btn-warning" href="{% url 'home' %}">Regresar al inicio</a>
+{% endblock %}

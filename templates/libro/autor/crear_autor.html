@@ -1,0 +1,38 @@
+{% extends "libro/home.html" %}
+{% block title %}Create{% endblock %}
+{% block content %}
+<br>
+<div class="card">
+    <div class="card-header">
+        <strong>Formulario de registro</strong>
+    </div>
+    <div class="card-body card-block">
+        <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            {% if error %}
+            <h2>{{ error }}</h2>
+            {% else %}
+            <div class="form-group">
+                <label for="name">{{ form.nombre.label }}</label>
+                {{ form.nombre }}
+            </div>
+            <div class="form-group">
+                <label for="lastname">{{ form.apellidos.label }}</label>
+                {{ form.apellidos }}
+            </div>
+            <div class="form-group">
+                <label for="country">{{ form.nacionalidad.label }}</label>
+                {{ form.nacionalidad }}
+            </div>
+            <div class="form-group">
+                <label for="descripcion">{{ form.descripcion.label }}</label>
+                {{ form.descripcion }}
+            </div>
+            <button class="btn btn-primary" type="submit">Crear</button>
+            <a class="btn btn-warning" href="{% url 'home' %}">Regresar al inicio</a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+{% endblock %}

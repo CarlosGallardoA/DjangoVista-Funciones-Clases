@@ -25,6 +25,8 @@
         {% block content %}
         <h1 class="">Pagina de inicio</h1>
         <br>
+        <a class="btn btn-info" href="{% url 'listar_libros' %}">Lista de libros</a>
+        <a class="btn btn-dark" href="{% url 'crear_libro' %}">Agregar libro</a>
         <a class="btn btn-primary" href="{% url 'listar_autor' %}">Lista de autores</a>
         <a class="btn btn-success" href="{% url 'crear_autor' %}">Agregar Autor</a>
         <a class="btn btn-warning" href="{% url 'logout' %}">Cerrar secion</a>

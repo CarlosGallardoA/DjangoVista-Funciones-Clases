@@ -21,20 +21,20 @@ class ListarAutor(TemplateView):
 '''
 class ListarAutor(ListView):
     model = Autor
-    template_name = 'libro/listar_autores.html'
+    template_name = 'libro/autor/listar_autores.html'
     #Nombre para el contexto a enviar, si no lo definimos se pasa como object_list
     context_object_name = 'autores'
     queryset = Autor.objects.filter(estado = True)
 
 class ActualizarAutor(UpdateView):
     model = Autor
-    template_name = 'libro/crear_autor.html'
+    template_name = 'libro/autor/crear_autor.html'
     form_class = AutorForm
     success_url = reverse_lazy('listar_autor')
 
 class CrearAutor(CreateView):
     model = Autor
-    template_name = 'libro/crear_autor.html'
+    template_name = 'libro/autor/crear_autor.html'
     form_class = AutorForm
     success_url = reverse_lazy('listar_autor')
 
@@ -48,3 +48,33 @@ class EliminarAutor(DeleteView):
         object.estado = False
         object.save()
         return redirect('listar_autor')
+
+
+class ListarLibros(ListView):
+    model = Libro
+    template_name = 'libro/libro/listar_libros.html' #queryset default is Lobro.objects.all()
+    queryset = Libro.objects.filter(estado = True)
+    context_object_name = 'libros'
+    
+## Ahora libros
+
+class CrearLibro(CreateView):
+    model = Libro
+    form_class = LibroForm
+    template_name = 'libro/libro/crear_libro.html'
+    success_url = reverse_lazy('listar_libros')
+
+class ActualizarLibro(UpdateView):
+    model = Libro
+    form_class = LibroForm
+    template_name = 'libro/libro/crear_libro.html'
+    success_url = reverse_lazy('listar_libros')
+
+class EliminarLibro(DeleteView):
+    model = Libro
+    def post(self, request, pk, *args, **kwargs):
+        object = Libro.objects.get(id=pk)
+        object.estado = False
+        object.save()
+        return redirect('listar_libros')
+

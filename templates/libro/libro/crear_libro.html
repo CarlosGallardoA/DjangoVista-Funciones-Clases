@@ -1,0 +1,17 @@
+{% extends "libro/home.html" %}
+{% block title %}Create{% endblock %}
+{% block content %}
+<br>
+<div class="card">
+    <div class="card-header">
+        <strong>Formulario de registro</strong>
+    </div>
+    <div class="card-body card-block">
+        <form action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-success" type="submit">Registrar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
